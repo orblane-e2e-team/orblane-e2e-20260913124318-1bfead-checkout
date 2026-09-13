@@ -1,0 +1,22 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install (real, small package, in a scratch dir — this repo's own manifest pins fictitious @orblane-internal/* packages on purpose, see fixture.ts; npm resolves a package.json's full dependency list even for a single named install, so this must not run inside the checkout)
+        run: |
+          mkdir -p /tmp/orblane-e2e-ci-scratch
+          cd /tmp/orblane-e2e-ci-scratch
+          npm init -y
+          npm install --no-save --ignore-scripts is-odd
+      - name: Run a trivial test
+        run: |
+          node -e "console.log('orblane e2e trivial test: ok'); process.exit(0)"
