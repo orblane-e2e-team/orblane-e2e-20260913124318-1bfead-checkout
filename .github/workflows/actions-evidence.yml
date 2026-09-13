@@ -1,0 +1,22 @@
+name: Orblane Actions evidence
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    environment: orblane-e2e-production
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - name: Create harmless evidence file
+        run: printf 'orblane-actions-e2e\n' > actions-evidence.txt
+      - name: Upload evidence artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: orblane-actions-evidence-${{ github.run_id }}
+          path: actions-evidence.txt
+          retention-days: 1
