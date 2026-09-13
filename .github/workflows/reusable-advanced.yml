@@ -1,0 +1,23 @@
+name: Structural v2 reusable companion (manual fixture)
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        type: string
+        required: false
+        default: "20"
+permissions:
+  contents: read
+cache-mode: read
+jobs:
+  reusable-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        node: [20]
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - parallel:
+          - run: echo reusable-lint
+          - run: echo reusable-unit
