@@ -1,0 +1,21 @@
+name: Unsafe policy evidence (never dispatch)
+on:
+  workflow_dispatch:
+permissions: write-all
+cache-mode: write
+jobs:
+  unsafe-standard:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [default]
+    steps:
+      - name: Mutable action reference
+        uses: actions/checkout@v4
+      - run: echo unsafe
+  unsafe-reusable:
+    uses: acme/platform/.github/workflows/deploy.yml@main
+    strategy:
+      matrix:
+        target: [default]
+    secrets: inherit
