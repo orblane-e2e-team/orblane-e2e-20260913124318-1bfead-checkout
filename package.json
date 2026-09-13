@@ -1,0 +1,12 @@
+{
+  "name": "checkout",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "express": "^4.19.2",
+    "pino": "^9.3.2",
+    "lodash": "4.17.15",
+    "@orblane-internal/auth-client": "^2.1.0",
+    "@orblane-internal/feature-flags": "^1.4.0"
+  }
+}
